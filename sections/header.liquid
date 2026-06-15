@@ -1,0 +1,548 @@
+<style>
+/* ── Announcement Bar ── */
+.announcement-bar {
+  background: var(--navy-deep);
+  border-bottom: 1px solid rgba(140, 146, 172, 0.12);
+  padding: 0.6rem 0;
+  text-align: center;
+}
+
+.announcement-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.announcement-divider {
+  color: var(--steel-dark);
+  font-size: 0.75rem;
+}
+
+/* ── Header ── */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(10, 17, 40, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(140, 146, 172, 0.1);
+  transition: background var(--transition), box-shadow var(--transition);
+}
+
+.site-header.scrolled {
+  background: rgba(6, 12, 26, 0.97);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+.header-inner {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  height: 72px;
+  gap: 2rem;
+}
+
+/* ── Logo ── */
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  justify-content: center;
+}
+
+.logo-mark {
+  width: 42px;
+  height: 42px;
+  background: var(--orange);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--white);
+  box-shadow: 0 0 20px rgba(255, 69, 0, 0.4);
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.logo-mark::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(ellipse, rgba(255,255,255,0.2), transparent);
+  border-radius: 50%;
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  letter-spacing: 0.08em;
+  color: var(--white);
+}
+
+.logo-text span {
+  color: var(--orange);
+}
+
+/* ── Navigation ── */
+.nav-left,
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.nav-left { justify-content: flex-start; }
+.nav-right { justify-content: flex-end; gap: 0.5rem; }
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.nav-links a {
+  font-family: var(--font-condensed);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--steel-light);
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 0.85rem;
+  right: 0.85rem;
+  height: 2px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transition: transform var(--transition);
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--white);
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  transform: scaleX(1);
+}
+
+/* ── Nav Actions ── */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nav-action-btn {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--steel-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+
+.nav-action-btn:hover {
+  color: var(--white);
+  background: rgba(255, 69, 0, 0.12);
+}
+
+.cart-count {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  min-width: 18px;
+  height: 18px;
+  background: var(--orange);
+  color: var(--white);
+  font-size: 0.65rem;
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Dropdown */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  left: 0;
+  min-width: 200px;
+  background: var(--navy-light);
+  border: 1px solid rgba(140, 146, 172, 0.15);
+  border-radius: var(--radius-md);
+  padding: 0.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: var(--transition);
+  box-shadow: var(--shadow-card);
+  z-index: 100;
+}
+
+.nav-dropdown:hover .nav-dropdown-menu {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+.nav-dropdown-menu li { list-style: none; }
+
+.nav-dropdown-menu a {
+  display: block;
+  padding: 0.6rem 1rem;
+  font-family: var(--font-condensed);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--steel-light);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  text-transform: uppercase;
+}
+
+.nav-dropdown-menu a:hover {
+  color: var(--white);
+  background: rgba(255, 69, 0, 0.12);
+  padding-left: 1.3rem;
+}
+
+/* ── Mobile Menu ── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: var(--transition);
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  background: var(--navy-deep);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.mobile-menu.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.mobile-nav-link {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  letter-spacing: 0.05em;
+  color: var(--white);
+  text-decoration: none;
+  transition: var(--transition);
+  line-height: 1;
+}
+
+.mobile-nav-link:hover { color: var(--orange); }
+
+/* ── Cart Drawer ── */
+.cart-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 12, 26, 0.7);
+  z-index: 1099;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition);
+  backdrop-filter: blur(4px);
+}
+
+.cart-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.cart-drawer {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: min(420px, 100vw);
+  background: var(--navy-light);
+  border-left: 1px solid rgba(140, 146, 172, 0.12);
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cart-drawer.open {
+  transform: translateX(0);
+}
+
+.cart-drawer__header {
+  padding: 1.5rem 1.75rem;
+  border-bottom: 1px solid rgba(140, 146, 172, 0.12);
+}
+
+.cart-drawer__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem 1.75rem;
+}
+
+.cart-drawer__footer {
+  padding: 1.5rem 1.75rem;
+  border-top: 1px solid rgba(140, 146, 172, 0.12);
+  background: var(--navy-deep);
+}
+
+.cart-total {
+  font-family: var(--font-condensed);
+}
+
+.cart-total__price {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--orange);
+}
+
+/* Cart Item */
+.cart-item {
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  gap: 1rem;
+  align-items: start;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(140, 146, 172, 0.08);
+}
+
+.cart-item__img {
+  width: 72px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+.cart-item__title {
+  font-family: var(--font-condensed);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.cart-item__variant {
+  font-size: 0.75rem;
+  color: var(--steel);
+  margin-top: 0.2rem;
+}
+
+.cart-item__qty {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.qty-btn {
+  width: 28px;
+  height: 28px;
+  background: var(--navy);
+  border: 1px solid var(--steel-dark);
+  color: var(--white);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.qty-btn:hover { background: var(--orange); border-color: var(--orange); }
+
+.qty-num {
+  font-family: var(--font-condensed);
+  font-weight: 700;
+  min-width: 24px;
+  text-align: center;
+}
+
+.cart-item__price {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--orange);
+}
+
+/* ── Responsive ── */
+@media (max-width: 960px) {
+  .nav-left,
+  .nav-right { display: none; }
+
+  .hamburger { display: flex; }
+
+  .header-inner {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .header-logo { justify-content: center; }
+}
+</style>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true" role="dialog" aria-label="Navigation">
+  <button class="hamburger active" id="closeMobile" aria-label="Close navigation">
+    <span></span><span></span><span></span>
+  </button>
+  {% for link in linklists.main-menu.links %}
+    <a href="{{ link.url }}" class="mobile-nav-link">{{ link.title }}</a>
+  {% endfor %}
+  <div class="flex gap-2" style="margin-top:1rem;">
+    <a href="/collections/all" class="btn btn-primary">Shop Now</a>
+  </div>
+</div>
+
+<header class="site-header" id="siteHeader" role="banner">
+  <div class="container">
+    <div class="header-inner">
+
+      <!-- Left Nav -->
+      <nav class="nav-left" aria-label="Primary navigation left">
+        <ul class="nav-links">
+          <li><a href="/collections/all"
+               {% if request.path contains '/collections' %}class="active"{% endif %}>
+            Shop
+          </a></li>
+          <li class="nav-dropdown">
+            <a href="#" aria-haspopup="true">
+              Collections ▾
+            </a>
+            <ul class="nav-dropdown-menu" role="menu">
+              {% for link in linklists.main-menu.links %}
+                <li role="none">
+                  <a href="{{ link.url }}" role="menuitem">{{ link.title }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </li>
+          <li><a href="/pages/lookbook">Lookbook</a></li>
+        </ul>
+      </nav>
+
+      <!-- Logo -->
+      <a href="/" class="header-logo" aria-label="FireBorn Home">
+        <div class="logo-mark" aria-hidden="true">🔥</div>
+        <span class="logo-text">FIRE<span>BORN</span></span>
+      </a>
+
+      <!-- Right Nav -->
+      <nav class="nav-right" aria-label="Primary navigation right">
+        <ul class="nav-links">
+          <li><a href="/pages/about">Our Story</a></li>
+          <li><a href="/blogs/news">Journal</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <!-- Search -->
+          <button class="nav-action-btn" id="searchBtn" aria-label="Search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+            </svg>
+          </button>
+
+          <!-- Account -->
+          <a href="/account" class="nav-action-btn" aria-label="Account">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </a>
+
+          <!-- Cart -->
+          <button class="nav-action-btn" id="cartBtn" aria-label="Cart">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 01-8 0"/>
+            </svg>
+            <span class="cart-count" id="cartCount">
+              {{ cart.item_count }}
+            </span>
+          </button>
+
+          <!-- Hamburger (Mobile) -->
+          <button class="hamburger" id="hamburger" aria-label="Open navigation"
+                  aria-expanded="false" aria-controls="mobileMenu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </nav>
+
+    </div><!-- /header-inner -->
+  </div><!-- /container -->
+</header>
