@@ -1,0 +1,82 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "collection_name": "Inferno Collection",
+        "sub_headline": "Wear the Heat. Own the Night.",
+        "hero_description": "FireBorn is a fashion brand built for those who refuse to fade. Each piece is forged in bold design, raw energy, and unapologetic style.",
+        "cta_primary_text": "Shop The Drop",
+        "cta_secondary_text": "View Lookbook",
+        "start_price": 49
+      }
+    },
+    "marquee": {
+      "type": "marquee-banner",
+      "settings": {}
+    },
+    "collection": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "01 — The Catalogue",
+        "title": "Shop The",
+        "title_accent": "Inferno Drop",
+        "product_limit": 8,
+        "show_banner": true,
+        "banner_tag": "Limited Drop",
+        "banner_title": "The Inferno Jacket",
+        "banner_desc": "A signature piece built to turn heads. Limited units. No restock."
+      }
+    },
+    "story": {
+      "type": "brand-story",
+      "settings": {
+        "eyebrow": "02 — Our DNA",
+        "headline": "We Don't Follow Trends. We Burn Them.",
+        "stat_number": "2019",
+        "stat_label": "Est. in Fire",
+        "cta_text": "Read Our Story"
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "block_order": ["review1", "review2", "review3"],
+      "blocks": {
+        "review1": {
+          "type": "review",
+          "settings": {
+            "quote": "I never thought a navy jacket could hit this hard. The orange tag detail is unreal — everyone asks where I got it.",
+            "name": "Jordan K.",
+            "location": "New York, USA",
+            "stars": 5
+          }
+        },
+        "review2": {
+          "type": "review",
+          "settings": {
+            "quote": "FireBorn changed how I dress. The fit is immaculate and the energy is just different. Blaze collection is everything.",
+            "name": "Aaliya M.",
+            "location": "London, UK",
+            "stars": 5
+          }
+        },
+        "review3": {
+          "type": "review",
+          "settings": {
+            "quote": "Ordered the steel grey hoodie — arrived in 2 days. Premium quality, perfect aesthetic. Repping FireBorn every day.",
+            "name": "Devin R.",
+            "location": "Toronto, CA",
+            "stars": 5
+          }
+        }
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "marquee",
+    "collection",
+    "story",
+    "testimonials"
+  ]
+}
