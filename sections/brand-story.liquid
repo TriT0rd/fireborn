@@ -1,0 +1,364 @@
+<style>
+.brand-story {
+  background: var(--navy-deep);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Large decorative text */
+.brand-story__deco {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-display);
+  font-size: clamp(8rem, 20vw, 22rem);
+  color: rgba(255,255,255,0.02);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: 0.05em;
+}
+
+.brand-story__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Visual side */
+.story-visual {
+  position: relative;
+}
+
+.story-img-stack {
+  position: relative;
+  height: 600px;
+}
+
+.story-img-main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 4rem;
+  bottom: 4rem;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid rgba(255,69,0,0.15);
+}
+
+.story-img-secondary {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 55%;
+  height: 45%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 3px solid var(--navy-deep);
+  box-shadow: var(--shadow-card);
+}
+
+.story-img-main img,
+.story-img-secondary img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Orange accent block */
+.story-accent-block {
+  position: absolute;
+  top: 2rem;
+  right: 0;
+  width: 4px;
+  height: 80px;
+  background: var(--orange);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 0 20px rgba(255,69,0,0.5);
+}
+
+/* Stats card on image */
+.story-stat-card {
+  position: absolute;
+  bottom: 5rem;
+  left: -2rem;
+  background: var(--navy);
+  border: 1px solid rgba(255,69,0,0.25);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.75rem;
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(10px);
+  z-index: 5;
+  animation: float 5s ease-in-out infinite;
+}
+
+.story-stat-card__number {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--orange);
+  line-height: 1;
+}
+
+.story-stat-card__label {
+  font-size: 0.7rem;
+  color: var(--steel);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-top: 0.2rem;
+}
+
+/* Text side */
+.story-text {}
+
+.story-text__intro {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange);
+  font-family: var(--font-condensed);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.story-text__intro::before {
+  content: '';
+  width: 40px;
+  height: 2px;
+  background: var(--orange);
+}
+
+.story-headline {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 2rem;
+}
+
+.story-headline em {
+  font-style: normal;
+  color: var(--orange);
+}
+
+.story-body {
+  color: var(--steel-light);
+  font-size: 1rem;
+  line-height: 1.9;
+  margin-bottom: 2.5rem;
+}
+
+.story-body p + p { margin-top: 1.25rem; }
+
+/* Pillars / Values */
+.story-pillars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.pillar {
+  padding: 1.25rem;
+  background: rgba(255,69,0,0.04);
+  border: 1px solid rgba(255,69,0,0.12);
+  border-radius: var(--radius-md);
+  transition: var(--transition);
+}
+
+.pillar:hover {
+  background: rgba(255,69,0,0.08);
+  border-color: rgba(255,69,0,0.3);
+  transform: translateY(-2px);
+}
+
+.pillar__icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.pillar__title {
+  font-family: var(--font-condensed);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 0.3rem;
+}
+
+.pillar__desc {
+  font-size: 0.8rem;
+  color: var(--steel);
+  line-height: 1.5;
+}
+
+/* CTA */
+.story-cta {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.story-signature {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--steel);
+  letter-spacing: 0.1em;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .brand-story__inner {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .story-img-stack { height: 400px; }
+  .story-stat-card { left: 0; }
+  .story-accent-block { display: none; }
+  .story-pillars { grid-template-columns: 1fr 1fr; }
+}
+</style>
+
+<section class="brand-story section-padding" id="brand-story"
+         aria-labelledby="story-headline">
+
+  <div class="brand-story__deco" aria-hidden="true">FIREBORN</div>
+
+  <div class="container">
+    <div class="brand-story__inner">
+
+      <!-- Visual -->
+      <div class="story-visual reveal">
+        <div class="story-img-stack">
+
+          <!-- Main Image -->
+          <div class="story-img-main">
+            {%- if section.settings.story_img_main -%}
+              <img
+                src="{{ section.settings.story_img_main | image_url: width: 800 }}"
+                alt="{{ section.settings.story_img_main_alt | default: 'FireBorn brand story' }}"
+                loading="lazy">
+            {%- else -%}
+              <div style="
+                width:100%; height:100%;
+                background: linear-gradient(160deg, #111d3d, #1a0a00 80%);
+                display:flex; align-items:center; justify-content:center;
+                font-size:8rem;
+              " aria-label="Brand story placeholder">🔥</div>
+            {%- endif -%}
+          </div>
+
+          <!-- Secondary Image -->
+          <div class="story-img-secondary">
+            {%- if section.settings.story_img_secondary -%}
+              <img
+                src="{{ section.settings.story_img_secondary | image_url: width: 400 }}"
+                alt="{{ section.settings.story_img_secondary_alt | default: 'FireBorn detail shot' }}"
+                loading="lazy">
+            {%- else -%}
+              <div style="
+                width:100%; height:100%;
+                background: linear-gradient(135deg, var(--orange), #ff8c00);
+                display:flex; align-items:center; justify-content:center;
+                font-size:3rem;
+              " aria-label="Detail shot placeholder">⚡</div>
+            {%- endif -%}
+          </div>
+
+          <!-- Accent Bar -->
+          <div class="story-accent-block" aria-hidden="true"></div>
+
+          <!-- Stat Card -->
+          <div class="story-stat-card">
+            <div class="story-stat-card__number">
+              {{ section.settings.stat_number | default: '2019' }}
+            </div>
+            <div class="story-stat-card__label">
+              {{ section.settings.stat_label | default: 'Est. in Fire' }}
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div class="story-text reveal delay-2">
+
+        <div class="story-text__intro">
+          {{ section.settings.eyebrow | default: '02 — Our DNA' }}
+        </div>
+
+        <h2 class="story-headline" id="story-headline">
+          {{ section.settings.headline | default: 'We Don\'t Follow Trends.<br><em>We Burn Them.</em>' }}
+        </h2>
+
+        <div class="story-body">
+          <p>{{ section.settings.body_1 | default: 'FireBorn was born from a single belief: that fashion should feel like a statement, not a whisper. Built from raw creative energy and an obsession with detail, every piece we make carries the heat of that original spark.' }}</p>
+          <p>{{ section.settings.body_2 | default: 'From the Midnight Navy base to the Blaze Orange signature tag on every garment — our aesthetic is bold, intentional, and unapologetically different. We build clothes for people who walk into rooms and change the temperature.' }}</p>
+        </div>
+
+        <!-- Pillars -->
+        <div class="story-pillars">
+          <div class="pillar">
+            <div class="pillar__icon">⚡</div>
+            <div class="pillar__title">Fearless Design</div>
+            <div class="pillar__desc">Every silhouette pushes the limits of what fashion dares to be.</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar__icon">🔥</div>
+            <div class="pillar__title">Quality Forge</div>
+            <div class="pillar__desc">Premium materials treated with the same intensity as our brand.</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar__icon">🌑</div>
+            <div class="pillar__title">Dark Aesthetic</div>
+            <div class="pillar__desc">Deep Navy moods meet Blaze Orange energy — always on point.</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar__icon">♾️</div>
+            <div class="pillar__title">Limited Drops</div>
+            <div class="pillar__desc">Scarcity by design. When it's gone, it's legendary.</div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="story-cta">
+          <a href="{{ section.settings.cta_url | default: '/pages/about' }}"
+             class="btn btn-primary">
+            {{ section.settings.cta_text | default: 'Read Our Story' }}
+          </a>
+          <span class="story-signature">— FireBorn Studio</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Brand Story",
+  "settings": [
+    { "type": "image_picker", "id": "story_img_main",      "label": "Main Story Image" },
+    { "type": "text",         "id": "story_img_main_alt",  "label": "Main Image Alt" },
+    { "type": "image_picker", "id": "story_img_secondary", "label": "Secondary Image" },
+    { "type": "text",         "id": "story_img_secondary_alt","label": "Secondary Alt" },
+    { "type": "text",         "id": "eyebrow",    "label": "Eyebrow",     "default": "02 — Our DNA" },
+    { "type": "text",         "id": "headline",   "label": "Headline",    "default": "We Don't Follow Trends. We Burn Them." },
+    { "type": "textarea",     "id": "body_1",     "label": "Body Text 1" },
+    { "type": "textarea",     "id": "body_2",     "label": "Body Text 2" },
+    { "type": "text",         "id": "stat_number","label": "Stat Number", "default": "2019" },
+    { "type": "text",         "id": "stat_label", "label": "Stat Label",  "default": "Est. in Fire" },
+    { "type": "text",         "id": "cta_text",   "label": "CTA Text",    "default": "Read Our Story" },
+    { "type": "url",          "id": "cta_url",    "label": "CTA URL" }
+  ],
+  "presets": [{ "name": "Brand Story", "category": "Content" }]
+}
+{% endschema %}
