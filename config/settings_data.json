@@ -1,0 +1,34 @@
+{
+  "current": {
+    "colors_primary_button":         "#FF4500",
+    "colors_primary_button_label":   "#FFFFFF",
+    "colors_secondary_button":       "transparent",
+    "colors_secondary_button_label": "#FFFFFF",
+    "colors_background_1":           "#0A1128",
+    "colors_background_2":           "#111D3D",
+    "colors_text":                   "#FFFFFF",
+    "colors_accent_1":               "#FF4500",
+    "colors_accent_2":               "#8C92AC",
+
+    "type_header_font":  "bebas_neue_n4",
+    "type_body_font":    "inter_n4",
+    "type_header_size":  50,
+    "type_body_size":    16,
+
+    "favicon": null,
+
+    "social_instagram_link": "",
+    "social_tiktok_link":    "",
+    "social_twitter_link":   "",
+    "social_pinterest_link": "",
+
+    "enable_currency_selector":  true,
+    "enable_language_selector":  false,
+
+    "cart_type":     "drawer",
+    "enable_cart_note": false,
+
+    "share_image": null
+  },
+  "presets": {}
+}
