@@ -1,0 +1,315 @@
+<style>
+.collection-section {
+  background: var(--navy);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background accent */
+.collection-section::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  right: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255,69,0,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.collection-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 3.5rem;
+  gap: 2rem;
+}
+
+.collection-header__left {}
+
+.collection-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.collection-number {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--orange);
+  letter-spacing: 0.1em;
+}
+
+.section-title {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  color: var(--white);
+  line-height: 1;
+}
+
+.section-title span {
+  color: var(--orange);
+}
+
+.collection-header__right {
+  flex-shrink: 0;
+}
+
+/* Filter tabs */
+.filter-tabs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.filter-tab {
+  font-family: var(--font-condensed);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--steel-dark);
+  background: none;
+  color: var(--steel-light);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.filter-tab:hover,
+.filter-tab.active {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--white);
+}
+
+/* Product Grid */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+/* Load More */
+.load-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 3.5rem;
+}
+
+.load-more-btn {
+  position: relative;
+  padding: 1rem 3rem;
+}
+
+.load-more-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: var(--orange);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  width: 0%;
+  transition: width 0.4s ease;
+}
+
+/* Featured Banner inside grid */
+.collection-banner {
+  grid-column: span 2;
+  background: linear-gradient(135deg, var(--navy-deep), #1a0a00);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255,69,0,0.2);
+  padding: 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+  overflow: hidden;
+  min-height: 400px;
+  transition: var(--transition);
+}
+
+.collection-banner:hover {
+  border-color: rgba(255,69,0,0.5);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.collection-banner__bg {
+  position: absolute;
+  inset: 0;
+  font-size: 12rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.06;
+  user-select: none;
+  animation: float 6s ease-in-out infinite;
+}
+
+.collection-banner__tag {
+  margin-bottom: 1rem;
+}
+
+.collection-banner h3 {
+  font-size: 2.8rem;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+
+.collection-banner p {
+  color: var(--steel-light);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  max-width: 300px;
+}
+
+@media (max-width: 1100px) {
+  .products-grid { grid-template-columns: repeat(3, 1fr); }
+  .collection-banner { grid-column: span 2; }
+}
+
+@media (max-width: 768px) {
+  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .collection-banner { grid-column: span 2; }
+  .collection-header { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 480px) {
+  .products-grid { grid-template-columns: 1fr; }
+  .collection-banner { grid-column: span 1; }
+}
+</style>
+
+<section class="collection-section section-padding" id="featured-collection"
+         aria-labelledby="collection-title">
+  <div class="container">
+
+    <!-- Header -->
+    <div class="collection-header">
+      <div class="collection-header__left reveal">
+        <div class="collection-eyebrow">
+          <div class="accent-line" style="margin:0;"></div>
+          <span class="label-tag text-orange">{{ section.settings.eyebrow | default: '01 — The Catalogue' }}</span>
+        </div>
+        <h2 class="section-title" id="collection-title">
+          {{ section.settings.title | default: 'Shop The' }}<br>
+          <span>{{ section.settings.title_accent | default: 'Inferno Drop' }}</span>
+        </h2>
+      </div>
+
+      <div class="collection-header__right reveal delay-2">
+        <a href="{{ section.settings.view_all_url | default: '/collections/all' }}"
+           class="btn btn-ghost">
+          View All Pieces
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.5">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs reveal" role="tablist" aria-label="Product filters">
+      <button class="filter-tab active" role="tab" aria-selected="true"
+              data-filter="all">All Pieces</button>
+      <button class="filter-tab" role="tab" aria-selected="false"
+              data-filter="tops">Tops</button>
+      <button class="filter-tab" role="tab" aria-selected="false"
+              data-filter="bottoms">Bottoms</button>
+      <button class="filter-tab" role="tab" aria-selected="false"
+              data-filter="outerwear">Outerwear</button>
+      <button class="filter-tab" role="tab" aria-selected="false"
+              data-filter="accessories">Accessories</button>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="products-grid" id="productsGrid">
+
+      {%- assign collection = collections[section.settings.collection] -%}
+      {%- assign product_limit = section.settings.product_limit | default: 8 -%}
+
+      {%- if collection != blank -%}
+        {%- for product in collection.products limit: product_limit -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+
+      {%- else -%}
+        {%- comment -%} Placeholder cards when no collection assigned {%- endcomment -%}
+        {%- for i in (1..8) -%}
+          <article class="product-card reveal" style="animation-delay:{{ forloop.index | times: 0.08 }}s">
+            <div class="product-card__media">
+              <div style="
+                width:100%;height:100%;aspect-ratio:3/4;
+                background:linear-gradient(160deg,#111d3d {{ forloop.index | times: 10 }}%, #1a0a00);
+                display:flex;align-items:center;justify-content:center;
+                font-size:3rem;
+              " aria-label="Sample product image">🔥</div>
+            </div>
+            <div class="product-card__info">
+              <div class="product-card__brand">FireBorn</div>
+              <div class="product-card__title">
+                {{ 'Blaze Jacket' | append: ' ' | append: forloop.index }}
+              </div>
+              <div class="product-card__footer">
+                <div class="product-card__price">
+                  <span class="price-current">$89.00</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        {%- endfor -%}
+      {%- endif -%}
+
+      <!-- In-grid Feature Banner -->
+      {%- if section.settings.show_banner -%}
+        <div class="collection-banner reveal">
+          <div class="collection-banner__bg" aria-hidden="true">🔥</div>
+          <span class="badge badge-orange collection-banner__tag">
+            {{ section.settings.banner_tag | default: 'Limited Drop' }}
+          </span>
+          <h3>{{ section.settings.banner_title | default: 'The Inferno Jacket' }}</h3>
+          <p>{{ section.settings.banner_desc | default: 'A signature piece built to turn heads. Limited units. No restock.' }}</p>
+          <a href="{{ section.settings.banner_url | default: '/products/' }}"
+             class="btn btn-primary">
+            Shop Now →
+          </a>
+        </div>
+      {%- endif -%}
+
+    </div><!-- /products-grid -->
+
+    <!-- Load More -->
+    <div class="load-more-wrap">
+      <button class="btn btn-ghost load-more-btn" id="loadMoreBtn"
+              aria-label="Load more products">
+        <span class="load-more-progress" id="loadMoreProgress"></span>
+        Load More Pieces
+      </button>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Collection",
+  "settings": [
+    { "type": "text",       "id": "eyebrow",       "label": "Eyebrow Text",     "default": "01 — The Catalogue" },
+    { "type": "text",       "id": "title",          "label": "Title",            "default": "Shop The" },
+    { "type": "text",       "id": "title_accent",   "label": "Title Accent",     "default": "Inferno Drop" },
+    { "type": "collection", "id": "collection",     "label": "Collection" },
+    { "type": "range",      "id": "product_limit",  "label": "Products to Show", "min": 4, "max": 16, "step": 4, "default": 8 },
+    { "type": "url",        "id": "view_all_url",   "label": "View All URL" },
+    { "type": "header",     "content": "In-Grid Banner" },
+    { "type": "checkbox",   "id": "show_banner",    "label": "Show Banner",      "default": true },
+    { "type": "text",       "id": "banner_tag",     "label": "Banner Tag",       "default": "Limited Drop" },
+    { "type": "text",       "id": "banner_title",   "label": "Banner Title",     "default": "The Inferno Jacket" },
+    { "type": "textarea",   "id": "banner_desc",    "label": "Banner Description" },
+    { "type": "url",        "id": "banner_url",     "label": "Banner Link" }
+  ],
+  "presets": [{ "name": "Featured Collection", "category": "Collection" }]
+}
+{% endschema %}
