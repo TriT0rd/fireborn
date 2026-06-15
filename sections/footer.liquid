@@ -1,0 +1,324 @@
+<style>
+.testimonials {
+  background: var(--navy-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonials::before {
+  content: '"';
+  position: absolute;
+  top: -2rem;
+  left: -1rem;
+  font-family: var(--font-display);
+  font-size: 30rem;
+  color: rgba(255,69,0,0.03);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.testimonials-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.testimonial-card {
+  background: var(--navy);
+  border: 1px solid rgba(140,146,172,0.1);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  position: relative;
+  transition: var(--transition);
+}
+
+.testimonial-card:hover {
+  border-color: rgba(255,69,0,0.25);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card);
+}
+
+.testimonial-card.featured {
+  border-color: rgba(255,69,0,0.3);
+  background: linear-gradient(135deg, var(--navy), rgba(255,69,0,0.04));
+  grid-row: span 1;
+}
+
+.testimonial-quote {
+  font-size: 0.9rem;
+  color: var(--steel-light);
+  line-height: 1.8;
+  margin-bottom: 1.75rem;
+  font-style: italic;
+}
+
+.testimonial-quote::before {
+  content: '"';
+  color: var(--orange);
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 0;
+  vertical-align: -0.5rem;
+  margin-right: 0.25rem;
+}
+
+.testimonial-footer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.testimonial-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--orange), #ff8c00);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--white);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.testimonial-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.testimonial-name {
+  font-family: var(--font-condensed);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.testimonial-meta {
+  font-size: 0.7rem;
+  color: var(--steel);
+  letter-spacing: 0.05em;
+  margin-top: 0.15rem;
+}
+
+.testimonial-stars {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 0.2rem;
+}
+
+.star {
+  color: var(--orange);
+  font-size: 0.85rem;
+}
+
+/* Rating summary */
+.rating-summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 3.5rem;
+  padding: 2rem;
+  background: var(--navy);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(140,146,172,0.1);
+}
+
+.rating-big {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  color: var(--orange);
+  line-height: 1;
+}
+
+.rating-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.rating-stars { display: flex; gap: 0.25rem; }
+.rating-count { font-size: 0.75rem; color: var(--steel); letter-spacing: 0.1em; }
+
+.rating-bars { flex: 1; max-width: 200px; }
+
+.rating-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.4rem;
+}
+
+.rating-bar-label {
+  font-size: 0.7rem;
+  color: var(--steel);
+  width: 12px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.rating-bar-track {
+  flex: 1;
+  height: 4px;
+  background: var(--navy-deep);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.rating-bar-fill {
+  height: 100%;
+  background: var(--orange);
+  border-radius: var(--radius-pill);
+  transition: width 1s ease;
+}
+
+@media (max-width: 900px) {
+  .testimonials-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 600px) {
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .rating-summary { flex-direction: column; text-align: center; }
+}
+</style>
+
+<section class="testimonials section-padding" aria-labelledby="testimonials-title">
+  <div class="container">
+
+    <!-- Header -->
+    <div class="testimonials-header reveal">
+      <div class="accent-line center"></div>
+      <span class="label-tag text-orange" style="display:block;margin-bottom:1rem;">
+        03 — Worn & Approved
+      </span>
+      <h2 class="display-md" id="testimonials-title">
+        What The <span class="text-orange">Flames Say</span>
+      </h2>
+    </div>
+
+    <!-- Grid -->
+    <div class="testimonials-grid">
+
+      {%- for block in section.blocks -%}
+        <div class="testimonial-card reveal {% if forloop.index == 2 %}featured{% endif %}"
+             style="animation-delay:{{ forloop.index | times: 0.12 }}s"
+             {{ block.shopify_attributes }}>
+
+          <div class="testimonial-stars" aria-label="{{ block.settings.stars }} out of 5 stars">
+            {%- for i in (1..block.settings.stars) -%}
+              <span class="star" aria-hidden="true">★</span>
+            {%- endfor -%}
+          </div>
+
+          <p class="testimonial-quote">{{ block.settings.quote }}</p>
+
+          <div class="testimonial-footer">
+            <div class="testimonial-avatar">
+              {%- if block.settings.avatar -%}
+                <img src="{{ block.settings.avatar | image_url: width: 100 }}"
+                     alt="{{ block.settings.name }}" loading="lazy">
+              {%- else -%}
+                {{ block.settings.name | slice: 0 }}
+              {%- endif -%}
+            </div>
+            <div>
+              <div class="testimonial-name">{{ block.settings.name }}</div>
+              <div class="testimonial-meta">
+                {{ block.settings.location | default: 'Verified Buyer' }}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      {%- else -%}
+        {%- assign placeholders = 'I never thought a navy jacket could hit this hard. The orange tag detail is unreal — everyone asks where I got it.,FireBorn changed how I dress. The fit is immaculate and the energy is just different. Blaze collection is 🔥,Ordered the steel grey hoodie and it arrived in 2 days. Quality is premium, aesthetic is everything. Repping FireBorn every day.' | split: ',' -%}
+        {%- assign names = 'Jordan K.,Aaliya M.,Devin R.' | split: ',' -%}
+        {%- assign locations = 'New York, USA,London, UK,Toronto, CA' | split: ',' -%}
+
+        {%- for quote in placeholders -%}
+          <div class="testimonial-card reveal {% if forloop.index == 2 %}featured{% endif %}"
+               style="animation-delay:{{ forloop.index | times: 0.12 }}s">
+            <div class="testimonial-stars" aria-label="5 out of 5 stars">
+              <span class="star" aria-hidden="true">★★★★★</span>
+            </div>
+            <p class="testimonial-quote">{{ quote }}</p>
+            <div class="testimonial-footer">
+              <div class="testimonial-avatar">
+                {{ names[forloop.index0] | slice: 0 }}
+              </div>
+              <div>
+                <div class="testimonial-name">{{ names[forloop.index0] }}</div>
+                <div class="testimonial-meta">{{ locations[forloop.index0] }} — Verified Buyer</div>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endfor -%}
+
+    </div><!-- /testimonials-grid -->
+
+    <!-- Rating Summary -->
+    <div class="rating-summary reveal">
+      <div>
+        <div class="rating-big">4.9</div>
+        <div class="rating-detail">
+          <div class="rating-stars">
+            <span style="color:var(--orange);font-size:1.1rem;">★★★★★</span>
+          </div>
+          <div class="rating-count">Based on 1,240+ Reviews</div>
+        </div>
+      </div>
+
+      <div class="rating-bars">
+        {%- assign bar_data = '5,92|4,6|3,1|2,1|1,0' | split: '|' -%}
+        {%- for bar in bar_data -%}
+          {%- assign parts = bar | split: ',' -%}
+          <div class="rating-bar-row">
+            <span class="rating-bar-label">{{ parts[0] }}</span>
+            <div class="rating-bar-track">
+              <div class="rating-bar-fill" style="width:{{ parts[1] }}%"></div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div style="text-align:center;">
+        <div class="label-tag text-orange" style="font-size:2rem;font-family:var(--font-display);">12K+</div>
+        <div class="label-tag text-steel">Happy Customers</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "textarea",    "id": "quote",    "label": "Quote" },
+        { "type": "text",        "id": "name",     "label": "Customer Name" },
+        { "type": "text",        "id": "location", "label": "Location" },
+        { "type": "image_picker","id": "avatar",   "label": "Avatar Image" },
+        { "type": "range",       "id": "stars",    "label": "Stars", "min": 1, "max": 5, "default": 5 }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [{ "name": "Testimonials", "category": "Social Proof" }]
+}
+{% endschema %}
