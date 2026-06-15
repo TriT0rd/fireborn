@@ -1,0 +1,60 @@
+<style>
+.marquee-section {
+  background: var(--orange);
+  padding: 1rem 0;
+  overflow: hidden;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.marquee-track {
+  display: flex;
+  white-space: nowrap;
+  animation: marquee 22s linear infinite;
+  will-change: transform;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 2rem;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 0.12em;
+  color: var(--white);
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.marquee-dot {
+  width: 6px;
+  height: 6px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+</style>
+
+<div class="marquee-section" aria-hidden="true" role="presentation">
+  <div class="marquee-track">
+    {% for i in (1..8) %}
+      <span class="marquee-item">
+        🔥 FireBorn <span class="marquee-dot"></span>
+      </span>
+      <span class="marquee-item">
+        Born From Fire <span class="marquee-dot"></span>
+      </span>
+      <span class="marquee-item">
+        New Drop <span class="marquee-dot"></span>
+      </span>
+      <span class="marquee-item">
+        Ignite Your Style <span class="marquee-dot"></span>
+      </span>
+    {% endfor %}
+  </div>
+</div>
